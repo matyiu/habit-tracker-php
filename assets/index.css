@@ -1,0 +1,51 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.add-habit {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.add-habit input[name="habit-duration"] {
+    max-width: 5em;
+}
+
+.habit {
+    box-shadow: 0 0 13px rgba(107, 107, 107, 0.23);
+    border-radius: 5px;
+    padding: 13px;
+    position: relative;
+}
+
+.habit .habit-header {
+    margin-bottom: 15px;
+}
+
+.habit .habit-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(107, 107, 107, 0.2);
+}
+
+.habit .habit-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.habit .habit-body {
+    margin-top: 25px;
+}
+
+.habit tbody td {
+    cursor: pointer;
+}
