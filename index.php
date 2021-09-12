@@ -1,3 +1,19 @@
+<?php 
+
+require './vendor/autoload.php';
+require './utils/datePeriod2Calendar.php';
+
+use App\Habit;
+
+$habits = [
+    new Habit('test', 50),
+    new Habit('test2', 21),
+    new Habit('test3', 21),
+    new Habit('test4', 50),
+];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,132 +42,45 @@
                     </div>
                 </div>
                 <div class="habits row mt-5">
-                    <div class="col-md-6">
-                        <div class="habit">
-                            <header class="habit-header">
-                                <p class="habit-title">Habit #1</p>
-                            </header>
-                            <div class="habit-body">
-                                <table class="table table-bordered text-center">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" colspan="7">February - March</th>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Mon</th>
-                                            <th scope="col">Tue</th>
-                                            <th scope="col">Wed</th>
-                                            <th scope="col">Thu</th>
-                                            <th scope="col">Fri</th>
-                                            <th scope="col">Sat</th>
-                                            <th scope="col">Sun</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <?php foreach ($habits as $habit): ?>
+                        <?php $calendar = datePeriod2Calendar($habit->getDatePeriod()) ?>
+                        <div class="col-md-6">
+                            <div class="habit">
+                                <header class="habit-header">
+                                    <p class="habit-title"><?php echo $habit->getName(); ?></p>
+                                </header>
+                                <div class="habit-body">
+                                    <table class="table table-bordered text-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" colspan="7">
+                                                    <?php echo $habit->getStart()->format('F') . ' - ' . $habit->getEnd()->format('F') ?>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Mon</th>
+                                                <th scope="col">Tue</th>
+                                                <th scope="col">Wed</th>
+                                                <th scope="col">Thu</th>
+                                                <th scope="col">Fri</th>
+                                                <th scope="col">Sat</th>
+                                                <th scope="col">Sun</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($calendar as $week): ?>
+                                                <tr>
+                                                    <?php foreach ($week as $day): ?>
+                                                        <td><?php echo $day['day'] ?></td>
+                                                    <?php endforeach; ?>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="habit">
-                            <header class="habit-header">
-                                <p class="habit-title">Habit #1</p>
-                            </header>
-                            <div class="habit-body">
-                                <table class="table table-bordered text-center">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" colspan="7">February - March</th>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Mon</th>
-                                            <th scope="col">Tue</th>
-                                            <th scope="col">Wed</th>
-                                            <th scope="col">Thu</th>
-                                            <th scope="col">Fri</th>
-                                            <th scope="col">Sat</th>
-                                            <th scope="col">Sun</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
