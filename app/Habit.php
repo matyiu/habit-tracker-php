@@ -2,6 +2,8 @@
 
 namespace App;
 
+require './utils/uuid.php';
+
 use \DateTimeImmutable;
 use \DateInterval;
 use \DatePeriod;
@@ -10,13 +12,19 @@ class Habit {
     private $name;
     private $duration;
     private $durationFormat = 'D';
-    private $dateFormat = 'j-n-Y';
+    private $dateFormat = 'Y-m-d';
     private $start;
     private $end;
+    private $id;
 
-    public function __construct(string $name, int $duration, string $start = null)
+    public function __construct(string $name, array $config)
     {
+        $duration = $config['duration'];
+        $start = $config['start'] ?? null;
+        $id = $config['id'] ?? uuid();
+
         $this->name = $name;
+        $this->id = $id;
 
         if (is_null($start)) {
             $this->start = new DateTimeImmutable('today');
@@ -81,6 +89,11 @@ class Habit {
     public function getDurationFormat()
     {
         return $this->durationFormat;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function toArray()

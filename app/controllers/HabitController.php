@@ -3,14 +3,15 @@
 namespace App\Controllers;
 
 use App\CSVStorage;
+use App\Models\HabitModel;
 
 class HabitController
 {
     public function index()
     {
-        $csvStorage = new CSVStorage;
-        $data = $csvStorage->read('habits.csv');
+        $model = new HabitModel(new CSVStorage);
+        $habits = $model->getAll();
 
-        return var_dump($data);
+        return view('index.view.php', ['habits' => $habits]);
     }
 }
