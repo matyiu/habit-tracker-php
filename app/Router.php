@@ -68,7 +68,7 @@ class Router {
         if (is_callable($callback)) {
             $results = call_user_func_array($callback, array_merge($_POST, $_GET));
         } else if (is_array($callback)) {
-            $class = $callback[0];
+            $class = new $callback[0];
             $method = $callback[1];
             $results = call_user_func_array([$class, $method], array_merge($_POST, $_GET));
         }
