@@ -10,5 +10,6 @@ use App\Router;
 $router = new Router;
 
 $router->get('', [HabitController::class, 'index']);
+$router->post('', [HabitController::class, 'store']);
 
 $router->run();

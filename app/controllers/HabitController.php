@@ -14,4 +14,9 @@ class HabitController
 
         return view('index.view.php', ['habits' => $habits]);
     }
+
+    public function store($request)
+    {
+        return json_encode($request);
+    }
 }

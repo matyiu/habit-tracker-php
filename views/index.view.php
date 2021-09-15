@@ -20,12 +20,12 @@ require './utils/datePeriod2Calendar.php';
             <div class="col-md-8 mx-auto d-flex flex-column justify-content-center">
                 <div class="row">
                     <div class="col-md-6 mx-auto">
-                        <form action="" method="POST">
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" name="addHabit">
                             <div class="col">
                                 <div class="input-group add-habit">
                                     <input type="text" class="form-control" name="habit-name" placeholder="Habit Name" aria-label="Habit Name">
                                     <input type="number" class="form-control" name="habit-duration" aria-label="Habit Duration in Days" value="50">
-                                    <button class="btn btn-primary">Add Habit</button>
+                                    <button type="submit" class="btn btn-primary">Add Habit</button>
                                 </div>
                             </div>
                         </form>
