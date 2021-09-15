@@ -65,12 +65,14 @@ class Router {
             return;
         }
 
-        if (is_callable($callback)) {
-            $results = call_user_func_array($callback, array_merge($_POST, $_GET));
-        } else if (is_array($callback)) {
+        $rawRequestBody = json_decode(file_get_contents('php://input'), true) ?? [];
+        $requestData = array_merge($rawRequestBody, $_POST, $_GET);
+        if (is_array($callback)) {
             $class = new $callback[0];
             $method = $callback[1];
-            $results = call_user_func_array([$class, $method], array_merge($_POST, $_GET));
+            $results = call_user_func_array([$class, $method], [$requestData]);
+        } else if (is_callable($callback)) {
+            $results = call_user_func_array($callback, [$requestData]);
         }
 
         echo $results;
