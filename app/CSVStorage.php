@@ -43,6 +43,29 @@ class CSVStorage
         return $data;
     }
 
+    public function write(string $path, array $data)
+    {
+        if (empty($data)) {
+            return false;
+        }
+
+        $absPath = $this->storagePath . $path;
+        file_put_contents($absPath, $this->convertAssocArrToCsv($data));
+
+        return $data;
+    }
+
+    private function convertAssocArrToCsv(array $data)
+    {
+        $headers = array_keys($data[0]);
+        $csvData = implode(',', $headers) . PHP_EOL;
+        foreach ($data as $value) {
+            $csvData .= implode(',', $value) . PHP_EOL;
+        }
+
+        return $csvData;
+    }
+
     private function convertArrToAssocArr(array $array, array $fields)
     {
         $assocArr = [];

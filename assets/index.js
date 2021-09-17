@@ -23,7 +23,14 @@
         }
         
         const jsonData = JSON.stringify(formData);
-        RequestJson.post('', jsonData, json => console.log(json));
+        RequestJson.post('', jsonData, refreshHabits);
+    }
+
+    function refreshHabits(res) {
+        // To Do: reload habits dinamically
+
+        console.log(res);
+        window.location.reload();
     }
 
     function validate(data) {
