@@ -102,7 +102,7 @@ class Habit {
             'name' => $this->name,
             'start' => $this->start->format($this->dateFormat),
             'end' => $this->end->format($this->dateFormat),
-            'duration' => $this->duration->format('d'),
+            'duration' => $this->duration->format('%d'),
             'durationFormat' => $this->durationFormat,
         ];
     }
