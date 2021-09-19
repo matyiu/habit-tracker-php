@@ -1,3 +1,5 @@
+import { DateHelper } from './utils.js';
+
 (() => {
     window.addEventListener('DOMContentLoaded', init);
 
@@ -23,14 +25,70 @@
         }
         
         const jsonData = JSON.stringify(formData);
-        RequestJson.post('', jsonData, refreshHabits);
+        RequestJson.post('', jsonData, createHabit);
     }
 
-    function refreshHabits(res) {
-        // To Do: reload habits dinamically
+    // To Do: create habit class to manage the habits more easily
+    function createHabit(res) {
+        const habit = res.data;
 
-        console.log(res);
-        window.location.reload();
+        const habitsContainer = document.querySelector('.habits');
+        const habitTemplate = document.querySelector('template#habit').content.cloneNode(true);
+        const fragment = document.createDocumentFragment();
+
+        // Get subcomponents of Habit
+        const title = habitTemplate.querySelector('.habit-title');
+        const months = habitTemplate.querySelector('thead tr:first-child th');
+        const tbody = habitTemplate.querySelector('tbody');
+
+        // Format raw data from habit response
+        const startDate = new Date(habit['start']);
+        const endDate = new Date(habit['end']);
+
+        const startMonth = startDate.toLocaleString('default', { month: 'long' });
+        const endMonth = endDate.toLocaleString('default', { month: 'long' });
+
+        // Set data
+        title.textContent = habit.name;
+        months.textContent = `${startMonth} - ${endMonth}`;
+        tbody.appendChild(createCalendar(startDate, endDate, habit['duration']));
+
+        fragment.appendChild(habitTemplate);
+        habitsContainer.appendChild(fragment);
+    }
+
+    function createCalendar(start, end, duration) {
+        end.setDate(end.getDate() - 1);
+
+        const fragment = document.createDocumentFragment();
+        const startWeekDay = DateHelper.getWeekDayMondayStart(start);
+        const endWeekDay = DateHelper.getWeekDayMondayStart(end);
+        const currentDate = new Date(start.getTime());
+        const totalWeeks = ((duration % 7) === 0 && startWeekDay > 0) ? 
+            Number(duration) / 7 + 1 : 
+            Math.ceil(Number(duration) / 7);
+
+        for (let y = 0; y < totalWeeks; y++) {
+            const week = document.createElement('tr');
+
+            for (let x = 0; x < 7; x++) {
+                const cell = document.createElement('td');
+
+                if (y == 0 && x < startWeekDay) {
+                    week.appendChild(cell);
+                } else if (y == (totalWeeks - 1) && x > endWeekDay) {
+                    week.appendChild(cell);
+                } else {
+                    cell.textContent = currentDate.getDate();
+                    week.appendChild(cell);
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            }
+
+            fragment.appendChild(week);
+        }
+
+        return fragment;
     }
 
     function validate(data) {
